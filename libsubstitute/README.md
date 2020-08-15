@@ -1,7 +1,7 @@
 # substitute
 libsusbtitute is the userland implementation for Mira Substitute system.
 
-Ported to OOSDK for PS4 by TheoryWrong on 8/15/2020
+OOSDK Substitute library for PS4 by TheoryWrong on 8/15/2020
 
 ## Notes 
 	- please use the oosdk_build.bat to build and install libsubstitute to oosdk.
@@ -14,7 +14,7 @@ Ported to OOSDK for PS4 by TheoryWrong on 8/15/2020
 The installation is done automatically by the build script
 
 ## Usage
-For hook a SCE Function, you need to use
+To hook a SCE Function, you need to use
 ```c
 struct substitute_hook* substitute_hook(const char* module_name, const char* name, void* hook_function, int flags);
 ```
@@ -81,10 +81,5 @@ int substitute_enable(struct substitute_hook* hook);
 
 ## Note
 
-You need to got the last version of Mira.
-For install the plugin inside the console, use the FTP or any other File Manager.
-The folder structure need to respect this case (For example with game CUSA00001 "The Playroom")
-
-`/data/mira/substitute/CUSA00001/ThePlugin.sprx`
-
-The plugin is launched automatically during the load of the game and before this entrypoint.
+You need to be running the latest version of Mira.
+To install a plugin built with libsubstitute, put the sprx in /data/mira/substitute/{titleid}/
