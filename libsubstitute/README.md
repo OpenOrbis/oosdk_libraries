@@ -14,14 +14,6 @@ Ported to OOSDK for PS4 by TheoryWrong on 8/15/2020
 The installation is done automatically by the build script
 
 ## Usage
-Before using substitute, it should first be initialised using the `substitute_initialize()`
-function.
-Return nothing.
-
-```c
-void substitute_initialize();
-```
-
 For hook a SCE Function, you need to use
 ```c
 struct substitute_hook* substitute_hook(const char* module_name, const char* name, void* hook_function, int flags);
@@ -50,8 +42,6 @@ void sceUserServiceGetUserName_hook(uint64_t userId, char *userName, const size_
 ...
 
 int module_start() {
-	substitute_initialize();
-
 	username_hook = substitute_hook(SUBSTITUTE_MAIN_MODULE, "sceUserServiceGetUserName", sceUserServiceGetUserName_hook, SUBSTITUTE_IAT_NAME);
 	if (!username_hook) {
 		printf("Unable to hook username function.\n");

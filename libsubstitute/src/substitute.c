@@ -9,22 +9,7 @@
 
 #include "substitute.h"
 
-int(*_ioctl)(int, unsigned long, ...) = NULL;
-
-void substitute_initialize() {
-  uint32_t kernel_module = sceKernelLoadStartModule("libkernel.sprx", 0, NULL, 0, NULL, NULL);
-  sceKernelDlsym(kernel_module, "ioctl", (void**)&_ioctl);
-
-  if (!_ioctl) {
-    printf("libsubstitute -> unable to get ioctl function.\n");
-  }
-}
-
 struct substitute_hook* substitute_hook(const char* module_name, const char* name, void* hook_function, int flags) {
-  if (!_ioctl) {
-    printf("libsubstitute -> unable to get ioctl function.\n");
-  }
-
   if (strlen(module_name) > SUBSTITUTE_MAX_NAME) {
     printf("libsubstitute -> mira_hook_iat(module_name): SUBSTITUTE_MAX_NAME reached.\n");
     return NULL;
@@ -63,7 +48,7 @@ struct substitute_hook* substitute_hook(const char* module_name, const char* nam
   strncpy(param.module_name, module_name, SUBSTITUTE_MAX_NAME);
 
   // Do ioctl
-  int ret = _ioctl(mira_device, MIRA_IOCTL_IAT_HOOK, &param);
+  int ret = ioctl(mira_device, MIRA_IOCTL_IAT_HOOK, &param);
 
   if (ret != 0) {
     printf("libsubstitute -> mira_hook_iat: ioctl error (%d).\n", ret);
@@ -85,11 +70,6 @@ struct substitute_hook* substitute_hook(const char* module_name, const char* nam
 }
 
 int substitute_statehook(struct substitute_hook* hook, int state) {
-  if (!_ioctl) {
-    printf("libsubstitute -> unable to get ioctl function.\n");
-    return 1;
-  }
-
   if (!hook) {
     printf("libsubstitute -> mira_hook_iat: invalid parameter.\n");
     return 1;
@@ -109,7 +89,7 @@ int substitute_statehook(struct substitute_hook* hook, int state) {
   param.chain = hook;
 
   // Do ioctl
-  int ret = _ioctl(mira_device, MIRA_IOCTL_STATE_HOOK, &param);
+  int ret = ioctl(mira_device, MIRA_IOCTL_STATE_HOOK, &param);
   close(mira_device);
 
   if (ret < 0) {

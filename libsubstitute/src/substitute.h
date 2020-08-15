@@ -63,7 +63,6 @@ struct substitute_hook {
 })
 
 
-void substitute_initialize();
 struct substitute_hook* substitute_hook(const char* module_name, const char* name, void* hook_function, int flags);
 int substitute_statehook(struct substitute_hook* hook, int state);
 int substitute_disable(struct substitute_hook* hook);
