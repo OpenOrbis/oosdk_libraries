@@ -15,6 +15,15 @@ Remember if you make improvements or fixes to create a pull request. Thank you.
 	- libpng, is a image decompression and compression for the png image format.
 	URL : https://github.com/OpenOrbis/oosdk_libraries/tree/master/libpng
 	
+## Audio Related Libraries
+	- ogg, a library for the OGG audio container format.
+	URL : https://github.com/OpenOrbis/oosdk_libraries/tree/master/oggvorbis-orbis/ogg
+	
+	- vorbis, a library for the Vorbis audio codec, together with the ogg library it can play OggVorbis audio files.
+	URL : https://github.com/OpenOrbis/oosdk_libraries/tree/master/oggvorbis-orbis/vorbis
+	
+	Use the build.sh script in ogg and vorbis directories to build the libraries.
+	
 ## Others 
 	- libmap, is a typeless hash map system, think of it as a key based array system that uses hashing.
 	URL : https://github.com/OpenOrbis/oosdk_libraries/tree/master/libmap
