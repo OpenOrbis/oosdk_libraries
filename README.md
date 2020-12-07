@@ -1,4 +1,4 @@
-### OpenOrbis SDK Librarie Ports
+### OpenOrbis SDK Libraries Ports
 
 ```
 This is a collection of libraries ported to the OpenOrbis SDK for PlayStation 4 Gaming System.
