@@ -21,7 +21,7 @@ struct substitute_hook* substitute_hook(const char* module_name, const char* nam
   }
 
   // Setup chain & information system
-  struct substitute_hook* hook = (struct substitute_hook*)malloc(sizeof(substitute_hook));
+  struct substitute_hook* hook = (struct substitute_hook*)malloc(sizeof(struct substitute_hook));
 
   if (!hook) {
     printf("libsubstitute -> mira_hook_iat: unable to malloc mira_hook structure !\n");
