@@ -28,9 +28,9 @@ export DEPSDIR		:=	$(DEPS)/$(PLATFORM)
 endif
 #---------------------------------------------------------------------------------
 
-TARGET		:=	libpng
+TARGET		:=	libsubstitute
 BUILD		:=	build
-SOURCE		:=	source
+SOURCE		:=	src
 INCLUDE		:=	include
 DATA		:=	data
 LIBS		:=	 
@@ -66,14 +66,10 @@ export INCLUDES	=	$(foreach dir,$(INCLUDE),-I$(CURDIR)/$(dir)) \
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	
+
 install: $(BUILD)
 	@echo Copying...
-	@cp -frv include/png.h $(OO_PS4_TOOLCHAIN)/include
-	@cp -frv include/pngconf.h $(OO_PS4_TOOLCHAIN)/include
-	@cp -frv include/pnglibconf.h $(OO_PS4_TOOLCHAIN)/include
-	@cp -frv include/pngstruct.h $(OO_PS4_TOOLCHAIN)/include
-	@cp -frv include/pnginfo.h $(OO_PS4_TOOLCHAIN)/include
+	@cp -frv src/substitute.h $(OO_PS4_TOOLCHAIN)/include
 	@cp -frv $(TARGET).a $(OO_PS4_TOOLCHAIN)/lib
 	@echo lib installed!
 clean:
