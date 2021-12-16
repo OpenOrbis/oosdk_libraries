@@ -3,14 +3,14 @@ UNAME_S     := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
 		CC      := clang
-		CCX     := clang++
+		CXX     := clang++
 		LD      := ld.lld
 		AR      := llvm-ar
 		CDIR    := linux
 endif
 ifeq ($(UNAME_S),Darwin)
 		CC      := /usr/local/opt/llvm/bin/clang
-		CCX     := /usr/local/opt/llvm/bin/clang++
+		CXX     := /usr/local/opt/llvm/bin/clang++
 		LD      := /usr/local/opt/llvm/bin/ld.lld
 		AR      := /usr/local/opt/llvm/bin/llvm-ar
 		CDIR    := macos
