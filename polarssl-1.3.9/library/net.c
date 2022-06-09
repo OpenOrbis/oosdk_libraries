@@ -82,7 +82,7 @@ static int wsa_init_done = 0;
     defined(__DragonFly__)
 #include <endian.h>
 #elif defined(__APPLE__) || defined(HAVE_MACHINE_ENDIAN_H) ||   \
-      defined(EFIX64) || defined(EFI32)
+      defined(EFIX64) || defined(EFI32) || defined(__arm__)
 #include <machine/endian.h>
 #elif defined(sun)
 #include <sys/isa_defs.h>
