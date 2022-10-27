@@ -35,7 +35,7 @@ INCLUDE		:=	include
 DATA		:=	data
 LIBS		:=	 
 
-CFLAGS      += -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -fuse-init-array -emit-obj -isysroot $(OO_PS4_TOOLCHAIN) -isystem $(OO_PS4_TOOLCHAIN)/include $(INCLUDES) -D_FILE_OFFSET_BITS=64 -Wall -W -Wdeclaration-after-statement
+CFLAGS      += -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -emit-obj -isysroot $(OO_PS4_TOOLCHAIN) -isystem $(OO_PS4_TOOLCHAIN)/include $(INCLUDES) -D_FILE_OFFSET_BITS=64 -Wall -W -Wdeclaration-after-statement
 CXXFLAGS    += $(CFLAGS) -isystem $(OO_PS4_TOOLCHAIN)/include/c++/v1
 
 
