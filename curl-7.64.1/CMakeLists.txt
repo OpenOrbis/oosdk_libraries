@@ -301,9 +301,10 @@ if(WIN32)
     CMAKE_USE_WINSSL OFF)
 endif()
 option(CMAKE_USE_MBEDTLS "Enable mbedTLS for SSL/TLS" OFF)
+option(CMAKE_USE_POLARSSL "Enable PolarSSL for SSL/TLS" OFF)
 
 set(openssl_default ON)
-if(WIN32 OR CMAKE_USE_DARWINSSL OR CMAKE_USE_WINSSL OR CMAKE_USE_MBEDTLS)
+if(WIN32 OR CMAKE_USE_DARWINSSL OR CMAKE_USE_WINSSL OR CMAKE_USE_MBEDTLS OR CMAKE_USE_POLARSSL)
   set(openssl_default OFF)
 endif()
 option(CMAKE_USE_OPENSSL "Use OpenSSL code. Experimental" ${openssl_default})
@@ -313,6 +314,7 @@ count_true(enabled_ssl_options_count
   CMAKE_USE_DARWINSSL
   CMAKE_USE_OPENSSL
   CMAKE_USE_MBEDTLS
+  CMAKE_USE_POLARSSL
 )
 if(enabled_ssl_options_count GREATER "1")
   set(CURL_WITH_MULTI_SSL ON)
@@ -373,6 +375,14 @@ if(CMAKE_USE_OPENSSL)
   check_symbol_exists(RAND_status "${CURL_INCLUDES}" HAVE_RAND_STATUS)
   check_symbol_exists(RAND_screen "${CURL_INCLUDES}" HAVE_RAND_SCREEN)
   check_symbol_exists(RAND_egd    "${CURL_INCLUDES}" HAVE_RAND_EGD)
+endif()
+
+if(CMAKE_USE_POLARSSL)
+  find_package(PolarSSL REQUIRED)
+  set(SSL_ENABLED ON)
+  set(USE_POLARSSL ON)
+  list(APPEND CURL_LIBS ${POLARSSL_LIBRARIES})
+  include_directories(${POLARSSL_INCLUDE_DIRS})
 endif()
 
 if(CMAKE_USE_MBEDTLS)
@@ -705,7 +715,7 @@ elseif(CURL_CA_PATH_AUTODETECT OR CURL_CA_BUNDLE_AUTODETECT)
   endif()
 endif()
 
-if(CURL_CA_PATH_SET AND NOT USE_OPENSSL AND NOT USE_MBEDTLS)
+if(CURL_CA_PATH_SET AND NOT USE_OPENSSL AND NOT USE_MBEDTLS AND NOT USE_POLARSSL)
   message(FATAL_ERROR
           "CA path only supported by OpenSSL, GnuTLS or mbed TLS. "
           "Set CURL_CA_PATH=none or enable one of those TLS backends.")
@@ -1182,6 +1192,7 @@ set(_items)
 _add_if("WinSSL"        SSL_ENABLED AND USE_WINDOWS_SSPI)
 _add_if("OpenSSL"       SSL_ENABLED AND USE_OPENSSL)
 _add_if("DarwinSSL"     SSL_ENABLED AND USE_DARWINSSL)
+_add_if("PolarSSL"      SSL_ENABLED AND USE_POLARSSL)
 _add_if("mbedTLS"       SSL_ENABLED AND USE_MBEDTLS)
 _add_if("IPv6"          ENABLE_IPV6)
 _add_if("unix-sockets"  USE_UNIX_SOCKETS)
@@ -1200,7 +1211,7 @@ _add_if("Kerberos"      NOT CURL_DISABLE_CRYPTO_AUTH AND
                         (HAVE_GSSAPI OR USE_WINDOWS_SSPI))
 # NTLM support requires crypto function adaptions from various SSL libs
 # TODO alternative SSL libs tests for SSP1, GNUTLS, NSS
-if(NOT CURL_DISABLE_CRYPTO_AUTH AND (USE_OPENSSL OR USE_WINDOWS_SSPI OR USE_DARWINSSL OR USE_MBEDTLS))
+if(NOT CURL_DISABLE_CRYPTO_AUTH AND (USE_OPENSSL OR USE_WINDOWS_SSPI OR USE_DARWINSSL OR USE_MBEDTLS OR USE_POLARSSL))
   _add_if("NTLM"        1)
   # TODO missing option (autoconf: --enable-ntlm-wb)
   _add_if("NTLM_WB"     NOT CURL_DISABLE_HTTP AND NTLM_WB_ENABLED)

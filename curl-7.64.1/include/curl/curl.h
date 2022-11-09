@@ -51,7 +51,7 @@
 
 #if defined(__FreeBSD__) && (__FreeBSD__ >= 2)
 /* Needed for __FreeBSD_version symbol definition */
-#include <osreldate.h>
+//#include <osreldate.h>
 #endif
 
 /* The include stuff here below is mainly for time_t! */
