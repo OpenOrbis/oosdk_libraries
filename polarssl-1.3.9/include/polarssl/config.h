@@ -112,7 +112,9 @@
  *
  * Comment if your system does not support the IPv6 socket interface
  */
+#ifndef CONFIG_NO_IPV6
 #define POLARSSL_HAVE_IPV6
+#endif
 
 /**
  * \def POLARSSL_PLATFORM_MEMORY

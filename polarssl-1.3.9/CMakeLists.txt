@@ -22,6 +22,14 @@ if(CMAKE_COMPILER_IS_CLANG)
   set(CMAKE_C_FLAGS_CHECK "-O1 -Werror")
 endif(CMAKE_COMPILER_IS_CLANG)
 
+if(PSP)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_NO_IPV6 -I${PSPDEV}/psp/sdk/include")
+endif()
+
+if(PS2)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_NO_IPV6 -D_EE -I${PS2DEV}/ps2sdk/ee/include -I${PS2DEV}/ps2sdk/common/include")
+endif()
+
 set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE}
     CACHE STRING "Choose the type of build: None Debug Release Coverage ASan Check CheckFull"
     FORCE)
